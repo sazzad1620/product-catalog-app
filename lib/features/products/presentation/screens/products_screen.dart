@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_catalog_app/core/utils/responsive.dart';
+import 'package:product_catalog_app/core/widgets/app_bar_divider.dart';
 import 'package:product_catalog_app/core/widgets/empty_view.dart';
 import 'package:product_catalog_app/core/widgets/error_view.dart';
 import 'package:product_catalog_app/core/widgets/loading_view.dart';
@@ -22,6 +23,7 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Product Catalog'),
         actions: const [ThemeToggleButton()],
+        bottom: const AppBarDivider(),
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {
@@ -53,23 +55,25 @@ class ProductsScreen extends StatelessWidget {
     }
 
     if (state is ProductsLoaded) {
-      return Column(
+      return CustomScrollView(
         key: const ValueKey('loaded'),
-        children: [
-          SearchField(
-            onChanged: (query) {
-              context.read<ProductsBloc>().add(SearchProducts(query));
-            },
+        slivers: [
+          SliverToBoxAdapter(
+            child: SearchField(
+              onChanged: (query) {
+                context.read<ProductsBloc>().add(SearchProducts(query));
+              },
+            ),
           ),
-          SortDropdown(
-            sortType: state.sortType,
-            onChanged: (sortType) {
-              context.read<ProductsBloc>().add(SortProducts(sortType));
-            },
+          SliverToBoxAdapter(
+            child: SortDropdown(
+              sortType: state.sortType,
+              onChanged: (sortType) {
+                context.read<ProductsBloc>().add(SortProducts(sortType));
+              },
+            ),
           ),
-          Expanded(
-            child: _buildProductBody(context, state),
-          ),
+          ..._buildProductSlivers(context, state),
         ],
       );
     }
@@ -77,37 +81,50 @@ class ProductsScreen extends StatelessWidget {
     return const SizedBox.shrink(key: ValueKey('empty'));
   }
 
-  Widget _buildProductBody(BuildContext context, ProductsLoaded state) {
+  List<Widget> _buildProductSlivers(
+    BuildContext context,
+    ProductsLoaded state,
+  ) {
     if (state.displayedProducts.isEmpty && state.searchQuery.isNotEmpty) {
-      return const EmptyView(
-        message: 'No products found for your search.',
-      );
+      return const [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: EmptyView(
+            message: 'No products found for your search.',
+          ),
+        ),
+      ];
     }
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: getGridCrossAxisCount(context),
-        childAspectRatio: 0.72,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+    return [
+      SliverPadding(
+        padding: const EdgeInsets.all(12),
+        sliver: SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: getGridCrossAxisCount(context),
+            childAspectRatio: 0.72,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              final product = state.displayedProducts[index];
+              return ProductCard(
+                product: product,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailsScreen(product: product),
+                    ),
+                  );
+                },
+              );
+            },
+            childCount: state.displayedProducts.length,
+          ),
+        ),
       ),
-      itemCount: state.displayedProducts.length,
-      itemBuilder: (context, index) {
-        final product = state.displayedProducts[index];
-        return ProductCard(
-          product: product,
-          onTap: () {
-            // Full product data passed from list response
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => ProductDetailsScreen(product: product),
-              ),
-            );
-          },
-        );
-      },
-    );
+    ];
   }
 }

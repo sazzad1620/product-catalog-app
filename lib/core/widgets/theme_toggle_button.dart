@@ -4,6 +4,10 @@ import 'package:product_catalog_app/core/theme/app_theme_scope.dart';
 class ThemeToggleButton extends StatelessWidget {
   const ThemeToggleButton({super.key});
 
+  static const _duration = Duration(milliseconds: 350);
+  static const _segmentWidth = 40.0;
+  static const _segmentHeight = 32.0;
+
   @override
   Widget build(BuildContext context) {
     final scope = AppThemeScope.of(context);
@@ -19,20 +23,37 @@ class ThemeToggleButton extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(4),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+          child: Stack(
             children: [
-              _Segment(
-                icon: Icons.light_mode_outlined,
-                tooltip: 'Light mode',
-                selected: !isDark,
-                onTap: isDark ? scope.toggleTheme : null,
+              AnimatedPositioned(
+                duration: _duration,
+                curve: Curves.easeInOut,
+                left: isDark ? _segmentWidth : 0,
+                child: Container(
+                  width: _segmentWidth,
+                  height: _segmentHeight,
+                  decoration: BoxDecoration(
+                    color: scheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
               ),
-              _Segment(
-                icon: Icons.dark_mode_outlined,
-                tooltip: 'Dark mode',
-                selected: isDark,
-                onTap: !isDark ? scope.toggleTheme : null,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _Segment(
+                    icon: Icons.light_mode_outlined,
+                    tooltip: 'Light mode',
+                    selected: !isDark,
+                    onTap: isDark ? scope.toggleTheme : null,
+                  ),
+                  _Segment(
+                    icon: Icons.dark_mode_outlined,
+                    tooltip: 'Dark mode',
+                    selected: isDark,
+                    onTap: !isDark ? scope.toggleTheme : null,
+                  ),
+                ],
               ),
             ],
           ),
@@ -61,19 +82,16 @@ class _Segment extends StatelessWidget {
 
     return Tooltip(
       message: tooltip,
-      child: Material(
-        color: selected ? scheme.surface : Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            child: Icon(
-              icon,
-              size: 20,
-              color: selected ? scheme.primary : scheme.onSurfaceVariant,
-            ),
+        child: SizedBox(
+          width: ThemeToggleButton._segmentWidth,
+          height: ThemeToggleButton._segmentHeight,
+          child: Icon(
+            icon,
+            size: 20,
+            color: selected ? scheme.primary : scheme.onSurfaceVariant,
           ),
         ),
       ),

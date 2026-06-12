@@ -8,42 +8,51 @@ class AppTheme {
 
   static ThemeData _buildTheme(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
+
+    final appBarColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final bodyColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9);
+    final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final inputFill = isDark ? const Color(0xFF334155) : Colors.white;
+
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       brightness: brightness,
-      surface: isDark ? const Color(0xFF1E293B) : AppColors.surface,
+      surface: cardColor,
     );
 
-    final border = OutlineInputBorder(
+    final inputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: colorScheme.outlineVariant),
+      borderSide: BorderSide.none,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-      scaffoldBackgroundColor:
-          isDark ? const Color(0xFF0F172A) : AppColors.background,
+      scaffoldBackgroundColor: bodyColor,
       appBarTheme: AppBarTheme(
-        backgroundColor: colorScheme.surface,
+        backgroundColor: appBarColor,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         centerTitle: false,
       ),
       cardTheme: CardThemeData(
+        color: cardColor,
         elevation: 0,
-        color: colorScheme.surface,
+        surfaceTintColor: Colors.transparent,
+        margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: colorScheme.outlineVariant),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surface,
+        fillColor: inputFill,
         labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-        border: border,
-        enabledBorder: border,
+        border: inputBorder,
+        enabledBorder: inputBorder,
+        focusedBorder: inputBorder,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
     );

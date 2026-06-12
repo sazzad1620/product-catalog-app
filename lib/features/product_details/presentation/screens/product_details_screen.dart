@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:product_catalog_app/core/theme/app_colors.dart';
+import 'package:product_catalog_app/core/widgets/app_bar_divider.dart';
 import 'package:product_catalog_app/core/widgets/theme_toggle_button.dart';
 import 'package:product_catalog_app/features/product_details/presentation/widgets/product_rating.dart';
 import 'package:product_catalog_app/features/products/domain/entities/product.dart';
@@ -18,6 +19,7 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Product Details'),
         actions: const [ThemeToggleButton()],
+        bottom: const AppBarDivider(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
