@@ -4,7 +4,7 @@ import 'package:product_catalog_app/core/theme/app_theme_scope.dart';
 class ThemeToggleButton extends StatelessWidget {
   const ThemeToggleButton({super.key});
 
-  static const _duration = Duration(milliseconds: 350);
+  static const _duration = Duration(milliseconds: 300);
   static const _segmentWidth = 40.0;
   static const _segmentHeight = 32.0;
 

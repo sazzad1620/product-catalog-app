@@ -3,7 +3,7 @@ import 'package:product_catalog_app/features/products/presentation/bloc/products
 
 enum _SortMenuOption { defaultOrder, priceLowToHigh, priceHighToLow }
 
-class SortDropdown extends StatelessWidget {
+class SortDropdown extends StatefulWidget {
   final SortType? sortType;
   final ValueChanged<SortType?> onChanged;
 
@@ -12,6 +12,15 @@ class SortDropdown extends StatelessWidget {
     required this.sortType,
     required this.onChanged,
   });
+
+  @override
+  State<SortDropdown> createState() => _SortDropdownState();
+}
+
+class _SortDropdownState extends State<SortDropdown> {
+  static const _radius = BorderRadius.all(Radius.circular(12));
+
+  bool _isMenuOpen = false;
 
   static String _label(SortType? sortType) {
     return switch (sortType) {
@@ -29,6 +38,12 @@ class SortDropdown extends StatelessWidget {
     };
   }
 
+  void _setMenuOpen(bool isOpen) {
+    if (_isMenuOpen != isOpen) {
+      setState(() => _isMenuOpen = isOpen);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -43,8 +58,9 @@ class SortDropdown extends StatelessWidget {
             width: menuWidth,
             child: PopupMenuButton<_SortMenuOption>(
               position: PopupMenuPosition.under,
+              borderRadius: _radius,
               popUpAnimationStyle: const AnimationStyle(
-                duration: Duration(milliseconds: 350),
+                duration: Duration(milliseconds: 300),
                 reverseDuration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 reverseCurve: Curves.easeInOut,
@@ -55,12 +71,15 @@ class SortDropdown extends StatelessWidget {
                 minWidth: menuWidth,
                 maxWidth: menuWidth,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+              shape: const RoundedRectangleBorder(borderRadius: _radius),
               color: scheme.surface,
               elevation: 2,
-              onSelected: (option) => onChanged(_toSortType(option)),
+              onOpened: () => _setMenuOpen(true),
+              onCanceled: () => _setMenuOpen(false),
+              onSelected: (option) {
+                _setMenuOpen(false);
+                widget.onChanged(_toSortType(option));
+              },
               itemBuilder: (context) => const [
                 PopupMenuItem(
                   value: _SortMenuOption.defaultOrder,
@@ -75,14 +94,24 @@ class SortDropdown extends StatelessWidget {
                   child: Text('Price: High to Low'),
                 ),
               ],
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.sort),
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ).applyDefaults(Theme.of(context).inputDecorationTheme),
-                child: Text(
-                  _label(sortType),
-                  style: TextStyle(color: scheme.onSurface, fontSize: 16),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: _radius,
+                clipBehavior: Clip.antiAlias,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.sort),
+                    suffixIcon: AnimatedRotation(
+                      turns: _isMenuOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: const Icon(Icons.arrow_drop_down),
+                    ),
+                  ).applyDefaults(Theme.of(context).inputDecorationTheme),
+                  child: Text(
+                    _label(widget.sortType),
+                    style: TextStyle(color: scheme.onSurface, fontSize: 16),
+                  ),
                 ),
               ),
             ),

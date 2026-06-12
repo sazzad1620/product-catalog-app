@@ -48,6 +48,7 @@ class _ProductCatalogAppState extends State<ProductCatalogApp> {
         create: (_) =>
             ProductsBloc(repository: widget.repository)..add(const FetchProducts()),
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Product Catalog',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

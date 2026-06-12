@@ -12,7 +12,7 @@ class AppTheme {
     final appBarColor = isDark ? const Color(0xFF1E293B) : Colors.white;
     final bodyColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9);
     final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final inputFill = isDark ? const Color(0xFF334155) : Colors.white;
+    final inputFill = cardColor;
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,

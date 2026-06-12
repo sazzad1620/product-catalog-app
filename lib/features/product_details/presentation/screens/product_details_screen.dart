@@ -59,10 +59,10 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               '\$${product.price.toStringAsFixed(2)}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: AppColors.priceColor(context),
               ),
             ),
             const SizedBox(height: 12),

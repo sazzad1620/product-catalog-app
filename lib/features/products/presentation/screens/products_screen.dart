@@ -55,9 +55,12 @@ class ProductsScreen extends StatelessWidget {
     }
 
     if (state is ProductsLoaded) {
-      return CustomScrollView(
-        key: const ValueKey('loaded'),
-        slivers: [
+      return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.translucent,
+        child: CustomScrollView(
+          key: const ValueKey('loaded'),
+          slivers: [
           SliverToBoxAdapter(
             child: SearchField(
               onChanged: (query) {
@@ -75,6 +78,7 @@ class ProductsScreen extends StatelessWidget {
           ),
           ..._buildProductSlivers(context, state),
         ],
+        ),
       );
     }
 
