@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalog_app/core/theme/app_colors.dart';
 import 'package:product_catalog_app/features/products/presentation/bloc/products_event.dart';
 
 class SortDropdown extends StatelessWidget {
@@ -14,27 +13,20 @@ class SortDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
       child: InputDecorator(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Sort by price',
-          filled: true,
-          fillColor: AppColors.surface,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.categoryChip),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.categoryChip),
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-        ),
+        ).applyDefaults(Theme.of(context).inputDecorationTheme),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<SortType?>(
             value: sortType,
             isExpanded: true,
+            dropdownColor: scheme.surface,
+            style: TextStyle(color: scheme.onSurface, fontSize: 16),
             items: const [
               DropdownMenuItem(
                 value: null,

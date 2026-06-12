@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalog_app/core/theme/app_colors.dart';
 
 class EmptyView extends StatelessWidget {
   final String message;
@@ -8,23 +7,25 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.search_off,
               size: 48,
-              color: AppColors.textSecondary,
+              color: scheme.onSurfaceVariant,
             ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.textSecondary,
+              style: TextStyle(
+                color: scheme.onSurfaceVariant,
                 fontSize: 16,
               ),
             ),

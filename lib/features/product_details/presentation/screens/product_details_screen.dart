@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:product_catalog_app/core/theme/app_colors.dart';
+import 'package:product_catalog_app/core/widgets/theme_toggle_button.dart';
 import 'package:product_catalog_app/features/product_details/presentation/widgets/product_rating.dart';
 import 'package:product_catalog_app/features/products/domain/entities/product.dart';
 
@@ -11,9 +12,12 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
+        actions: const [ThemeToggleButton()],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -29,20 +33,20 @@ class ProductDetailsScreen extends StatelessWidget {
                   height: 220,
                   child: Center(child: CircularProgressIndicator()),
                 ),
-                errorWidget: (_, _, _) => const Icon(
+                errorWidget: (_, _, _) => Icon(
                   Icons.image_not_supported_outlined,
                   size: 64,
-                  color: AppColors.textSecondary,
+                  color: scheme.onSurfaceVariant,
                 ),
               ),
             ),
             const SizedBox(height: 20),
             Text(
               product.title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: scheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -60,33 +64,33 @@ class ProductDetailsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.categoryChip,
+                color: scheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 product.category,
-                style: const TextStyle(
-                  color: AppColors.textSecondary,
+                style: TextStyle(
+                  color: scheme.onSurfaceVariant,
                   fontSize: 13,
                 ),
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Description',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: scheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               product.description,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 height: 1.5,
-                color: AppColors.textSecondary,
+                color: scheme.onSurfaceVariant,
               ),
             ),
           ],

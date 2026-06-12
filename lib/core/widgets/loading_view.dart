@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalog_app/core/theme/app_colors.dart';
 
 class LoadingView extends StatelessWidget {
   final String? message;
@@ -17,7 +16,9 @@ class LoadingView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               message!,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ],

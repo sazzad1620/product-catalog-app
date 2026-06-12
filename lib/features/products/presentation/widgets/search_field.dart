@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalog_app/core/theme/app_colors.dart';
 
 class SearchField extends StatefulWidget {
   final ValueChanged<String> onChanged;
@@ -42,18 +41,7 @@ class _SearchFieldState extends State<SearchField> {
                   },
                 )
               : null,
-          filled: true,
-          fillColor: AppColors.surface,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.categoryChip),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.categoryChip),
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-        ),
+        ).applyDefaults(Theme.of(context).inputDecorationTheme),
       ),
     );
   }

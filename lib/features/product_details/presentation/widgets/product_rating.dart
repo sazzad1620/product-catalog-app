@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalog_app/core/theme/app_colors.dart';
 import 'package:product_catalog_app/features/products/domain/entities/rating.dart';
 
 class ProductRating extends StatelessWidget {
@@ -13,23 +12,25 @@ class ProductRating extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final scheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         const Icon(Icons.star, color: Colors.amber, size: 20),
         const SizedBox(width: 4),
         Text(
           rating.rate.toStringAsFixed(1),
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: scheme.onSurface,
           ),
         ),
         if (rating.count > 0) ...[
           const SizedBox(width: 4),
           Text(
             '(${rating.count} reviews)',
-            style: const TextStyle(
-              color: AppColors.textSecondary,
+            style: TextStyle(
+              color: scheme.onSurfaceVariant,
               fontSize: 14,
             ),
           ),

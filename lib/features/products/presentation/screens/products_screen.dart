@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_catalog_app/core/widgets/empty_view.dart';
 import 'package:product_catalog_app/core/widgets/error_view.dart';
 import 'package:product_catalog_app/core/widgets/loading_view.dart';
+import 'package:product_catalog_app/core/widgets/theme_toggle_button.dart';
 import 'package:product_catalog_app/features/product_details/presentation/screens/product_details_screen.dart';
 import 'package:product_catalog_app/features/products/presentation/bloc/products_bloc.dart';
 import 'package:product_catalog_app/features/products/presentation/bloc/products_event.dart';
@@ -19,6 +20,7 @@ class ProductsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Catalog'),
+        actions: const [ThemeToggleButton()],
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {
