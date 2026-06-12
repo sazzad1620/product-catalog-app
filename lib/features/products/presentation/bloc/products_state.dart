@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:product_catalog_app/features/products/domain/entities/product.dart';
+import 'package:product_catalog_app/features/products/presentation/bloc/products_event.dart';
 
 abstract class ProductsState extends Equatable {
   const ProductsState();
@@ -17,12 +18,21 @@ class ProductsLoading extends ProductsState {
 }
 
 class ProductsLoaded extends ProductsState {
-  final List<Product> products;
+  final List<Product> allProducts;
+  final List<Product> displayedProducts;
+  final String searchQuery;
+  final SortType? sortType;
 
-  const ProductsLoaded({required this.products});
+  const ProductsLoaded({
+    required this.allProducts,
+    required this.displayedProducts,
+    required this.searchQuery,
+    this.sortType,
+  });
 
   @override
-  List<Object?> get props => [products];
+  List<Object?> get props =>
+      [allProducts, displayedProducts, searchQuery, sortType];
 }
 
 class ProductsError extends ProductsState {
