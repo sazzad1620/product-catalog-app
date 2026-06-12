@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:product_catalog_app/core/utils/responsive.dart';
 import 'package:product_catalog_app/core/widgets/empty_view.dart';
 import 'package:product_catalog_app/core/widgets/error_view.dart';
 import 'package:product_catalog_app/core/widgets/loading_view.dart';
@@ -73,8 +74,8 @@ class ProductsScreen extends StatelessWidget {
 
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: getGridCrossAxisCount(context),
         childAspectRatio: 0.72,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
