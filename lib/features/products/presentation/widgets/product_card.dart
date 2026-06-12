@@ -24,19 +24,22 @@ class ProductCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Center(
-                  child: CachedNetworkImage(
-                    imageUrl: product.image,
-                    fit: BoxFit.contain,
-                    placeholder: (_, _) => const SizedBox(
-                      height: 80,
-                      child: Center(
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                  child: Hero(
+                    tag: 'product-${product.id}',
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
+                      fit: BoxFit.contain,
+                      placeholder: (_, _) => const SizedBox(
+                        height: 80,
+                        child: Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
                       ),
-                    ),
-                    errorWidget: (_, _, _) => Icon(
-                      Icons.image_not_supported_outlined,
-                      size: 40,
-                      color: scheme.onSurfaceVariant,
+                      errorWidget: (_, _, _) => Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 40,
+                        color: scheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
                 ),

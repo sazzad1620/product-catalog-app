@@ -25,18 +25,21 @@ class ProductDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: CachedNetworkImage(
-                imageUrl: product.image,
-                height: 220,
-                fit: BoxFit.contain,
-                placeholder: (_, _) => const SizedBox(
+              child: Hero(
+                tag: 'product-${product.id}',
+                child: CachedNetworkImage(
+                  imageUrl: product.image,
                   height: 220,
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-                errorWidget: (_, _, _) => Icon(
-                  Icons.image_not_supported_outlined,
-                  size: 64,
-                  color: scheme.onSurfaceVariant,
+                  fit: BoxFit.contain,
+                  placeholder: (_, _) => const SizedBox(
+                    height: 220,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  errorWidget: (_, _, _) => Icon(
+                    Icons.image_not_supported_outlined,
+                    size: 64,
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ),

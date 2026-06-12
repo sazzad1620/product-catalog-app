@@ -25,44 +25,56 @@ class ProductsScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {
-          if (state is ProductsLoading || state is ProductsInitial) {
-            return const LoadingView(message: 'Loading products...');
-          }
-
-          if (state is ProductsError) {
-            return ErrorView(
-              message: state.message,
-              onRetry: () {
-                context.read<ProductsBloc>().add(const RetryFetch());
-              },
-            );
-          }
-
-          if (state is ProductsLoaded) {
-            return Column(
-              children: [
-                SearchField(
-                  onChanged: (query) {
-                    context.read<ProductsBloc>().add(SearchProducts(query));
-                  },
-                ),
-                SortDropdown(
-                  sortType: state.sortType,
-                  onChanged: (sortType) {
-                    context.read<ProductsBloc>().add(SortProducts(sortType));
-                  },
-                ),
-                Expanded(
-                  child: _buildProductBody(context, state),
-                ),
-              ],
-            );
-          }
-
-          return const SizedBox.shrink();
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: _buildBody(context, state),
+          );
         },
       ),
     );
+  }
+
+  Widget _buildBody(BuildContext context, ProductsState state) {
+    if (state is ProductsLoading || state is ProductsInitial) {
+      return const LoadingView(
+        key: ValueKey('loading'),
+        message: 'Loading products...',
+      );
+    }
+
+    if (state is ProductsError) {
+      return ErrorView(
+        key: const ValueKey('error'),
+        message: state.message,
+        onRetry: () {
+          context.read<ProductsBloc>().add(const RetryFetch());
+        },
+      );
+    }
+
+    if (state is ProductsLoaded) {
+      return Column(
+        key: const ValueKey('loaded'),
+        children: [
+          SearchField(
+            onChanged: (query) {
+              context.read<ProductsBloc>().add(SearchProducts(query));
+            },
+          ),
+          SortDropdown(
+            sortType: state.sortType,
+            onChanged: (sortType) {
+              context.read<ProductsBloc>().add(SortProducts(sortType));
+            },
+          ),
+          Expanded(
+            child: _buildProductBody(context, state),
+          ),
+        ],
+      );
+    }
+
+    return const SizedBox.shrink(key: ValueKey('empty'));
   }
 
   Widget _buildProductBody(BuildContext context, ProductsLoaded state) {
