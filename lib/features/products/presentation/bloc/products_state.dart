@@ -18,6 +18,7 @@ class ProductsLoading extends ProductsState {
 }
 
 class ProductsLoaded extends ProductsState {
+  // Source list preserved; filter and sort affect display only
   final List<Product> allProducts;
   final List<Product> displayedProducts;
   final String searchQuery;

@@ -13,6 +13,7 @@ class ProductRating extends StatelessWidget {
     }
 
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Row(
       children: [
@@ -20,18 +21,15 @@ class ProductRating extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           rating.rate.toStringAsFixed(1),
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: scheme.onSurface,
-          ),
+          style: textTheme.bodyMedium?.copyWith(color: scheme.onSurface),
         ),
         if (rating.count > 0) ...[
           const SizedBox(width: 4),
           Text(
             '(${rating.count} reviews)',
-            style: TextStyle(
+            style: textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.normal,
               color: scheme.onSurfaceVariant,
-              fontSize: 14,
             ),
           ),
         ],

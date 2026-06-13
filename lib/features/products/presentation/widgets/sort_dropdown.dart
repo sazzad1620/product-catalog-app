@@ -47,6 +47,7 @@ class _SortDropdownState extends State<SortDropdown> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
@@ -110,7 +111,7 @@ class _SortDropdownState extends State<SortDropdown> {
                   ).applyDefaults(Theme.of(context).inputDecorationTheme),
                   child: Text(
                     _label(widget.sortType),
-                    style: TextStyle(color: scheme.onSurface, fontSize: 16),
+                    style: textTheme.titleMedium,
                   ),
                 ),
               ),

@@ -8,6 +8,7 @@ class EmptyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Padding(
@@ -24,9 +25,9 @@ class EmptyView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: textTheme.titleMedium?.copyWith(
                 color: scheme.onSurfaceVariant,
-                fontSize: 16,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ],

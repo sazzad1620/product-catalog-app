@@ -13,7 +13,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Padding(
@@ -30,10 +30,7 @@ class ErrorView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: scheme.onSurface,
-                fontSize: 16,
-              ),
+              style: textTheme.titleMedium,
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 24),

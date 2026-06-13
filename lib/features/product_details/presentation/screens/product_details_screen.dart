@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:product_catalog_app/core/theme/app_colors.dart';
+import 'package:product_catalog_app/core/utils/format_price.dart';
 import 'package:product_catalog_app/core/widgets/app_bar_divider.dart';
 import 'package:product_catalog_app/core/widgets/theme_toggle_button.dart';
 import 'package:product_catalog_app/features/product_details/presentation/widgets/product_rating.dart';
@@ -14,6 +15,7 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,20 +50,14 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               product.title,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: scheme.onSurface,
-              ),
+              style: textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             ProductRating(rating: product.rating),
             const SizedBox(height: 12),
             Text(
-              '\$${product.price.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+              formatPrice(product.price),
+              style: textTheme.headlineSmall?.copyWith(
                 color: AppColors.priceColor(context),
               ),
             ),
@@ -74,29 +70,18 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               child: Text(
                 product.category,
-                style: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontSize: 13,
-                ),
+                style: textTheme.labelSmall?.copyWith(fontSize: 13),
               ),
             ),
             const SizedBox(height: 20),
             Text(
               'Description',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: scheme.onSurface,
-              ),
+              style: textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
               product.description,
-              style: TextStyle(
-                fontSize: 15,
-                height: 1.5,
-                color: scheme.onSurfaceVariant,
-              ),
+              style: textTheme.bodyLarge,
             ),
           ],
         ),

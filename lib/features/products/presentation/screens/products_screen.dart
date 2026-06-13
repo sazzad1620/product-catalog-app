@@ -116,6 +116,7 @@ class ProductsScreen extends StatelessWidget {
               return ProductCard(
                 product: product,
                 onTap: () {
+                  // Full product passed from list; no separate details fetch
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -25,9 +25,47 @@ class AppTheme {
       borderSide: BorderSide.none,
     );
 
+    final textTheme = TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onSurface,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onSurface,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 15,
+        height: 1.5,
+        color: colorScheme.onSurfaceVariant,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onSurface,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 11,
+        color: colorScheme.onSurfaceVariant,
+      ),
+    );
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
+      textTheme: textTheme,
       scaffoldBackgroundColor: bodyColor,
       appBarTheme: AppBarTheme(
         backgroundColor: appBarColor,

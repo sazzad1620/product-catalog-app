@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:product_catalog_app/core/theme/app_colors.dart';
+import 'package:product_catalog_app/core/utils/format_price.dart';
 import 'package:product_catalog_app/features/products/domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -12,6 +13,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -49,18 +51,12 @@ class ProductCard extends StatelessWidget {
                 product.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                  color: scheme.onSurface,
-                ),
+                style: textTheme.titleSmall,
               ),
               const SizedBox(height: 4),
               Text(
-                '\$${product.price.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                formatPrice(product.price),
+                style: textTheme.bodyMedium?.copyWith(
                   color: AppColors.priceColor(context),
                 ),
               ),
@@ -75,10 +71,7 @@ class ProductCard extends StatelessWidget {
                   product.category,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: scheme.onSurfaceVariant,
-                  ),
+                  style: textTheme.labelSmall,
                 ),
               ),
             ],
