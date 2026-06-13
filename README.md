@@ -51,6 +51,14 @@ lib/
 | `equatable` | Value comparison for BLoC states and events |
 | `cached_network_image` | Product image loading and caching |
 
+## Tests
+
+```bash
+flutter test
+```
+
+Covers `ProductsBloc` (fetch, error, search, sort) and the `LoadingView` widget.
+
 ## Assumptions
 
 - FakeStore API returns valid product data for both list and details views.
